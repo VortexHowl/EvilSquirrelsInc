@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$ACORNS — They Were Always In Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Courier+Prime:wght@400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #5ccb3f;
+    --bright-green: #9efb2e;
+    --acid-green: #c8ff00;
+    --black: #06080a;
+    --off-white: #dde8cc;
+    --drool-blue: #4fc3f7;
+    --crazy-red: #ff3b3b;
+    --acorn-brown: #8B5E3C;
+    --acorn-gold: #D4A017;
+    --portal-teal: #01ffb3;
+    --void-purple: #1a0528;
+    --sigil-amber: #e8a020;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Courier Prime', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.07) 2px,
+      rgba(0,0,0,0.07) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* ===== SACRED GEOMETRY BACKGROUND ===== */
+  .sacred-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0.065;
+  }
+  .sacred-bg svg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px; height: 900px;
+    animation: rotate-slow 90s linear infinite;
+  }
+  @keyframes rotate-slow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 40px;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, var(--void-purple) 0%, transparent 72%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .bg-portal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(1,255,179,0.06) 0%, rgba(92,203,63,0.04) 40%, transparent 70%);
+    animation: pulse-portal 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Slow sacred ring */
+  .sacred-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,160,23,0.12);
+    pointer-events: none;
+    animation: ring-spin 70s linear infinite;
+  }
+  .sacred-ring::before {
+    content: '';
+    position: absolute;
+    inset: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(158,251,46,0.07);
+    animation: ring-spin 45s linear infinite reverse;
+  }
+  .sacred-ring::after {
+    content: 'ᛟ  ✦  ᚷ  ✦  ᛉ  ✦  ᚹ  ✦';
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 10px;
+    color: rgba(212,160,23,0.3);
+    white-space: nowrap;
+    font-family: 'Cinzel', serif;
+  }
+
+  @keyframes ring-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes pulse-portal {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  .above-eyes {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: rgba(212,160,23,0.38);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyes-banner {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eye {
+    width: 54px; height: 68px;
+    background: white;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 3px solid #222;
+    position: relative;
+    overflow: hidden;
+    animation: blink 4s steps(1) infinite;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(212,160,23,0.18), inset 0 -4px 8px rgba(0,0,0,0.2);
+  }
+  .eye::before {
+    content: '';
+    position: absolute;
+    width: 32px; height: 40px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: dart-eyes 5s ease-in-out infinite;
+  }
+  .eye::after {
+    content: '';
+    position: absolute;
+    width: 12px; height: 14px;
+    background: var(--bright-green);
+    border-radius: 50%;
+    top: 28%; left: 30%;
+  }
+  .eye.right::after { left: 38%; }
+
+  @keyframes blink {
+    0%, 89%, 100% { transform: scaleY(1); }
+    90%, 95% { transform: scaleY(0.05); }
+  }
+  @keyframes dart-eyes {
+    0%, 100% { transform: translate(-50%, -50%); }
+    20% { transform: translate(-30%, -60%); }
+    40% { transform: translate(-70%, -40%); }
+    60% { transform: translate(-50%, -30%); }
+    80% { transform: translate(-60%, -55%); }
+  }
+
+  .eye-drool {
+    position: absolute;
+    bottom: -22px; left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    background: rgba(100, 200, 255, 0.7);
+    border-radius: 0 0 4px 4px;
+    animation: drool-grow 3s ease-in-out infinite;
+  }
+  @keyframes drool-grow {
+    0%, 100% { height: 0px; opacity: 0; }
+    50% { height: 22px; opacity: 1; }
+  }
+
+  .title-block { position: relative; z-index: 2; }
+
+  h1 {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(72px, 14vw, 140px);
+    letter-spacing: 6px;
+    color: var(--bright-green);
+    text-shadow:
+      4px 4px 0 var(--acorn-brown),
+      8px 8px 0 #000,
+      0 0 40px rgba(158,251,46,0.5),
+      0 0 80px rgba(158,251,46,0.2);
+    line-height: 1;
+    animation: title-glitch 8s infinite;
+  }
+  @keyframes title-glitch {
+    0%, 92%, 100% { transform: skewX(0deg); filter: none; }
+    93% { transform: skewX(-2deg); filter: hue-rotate(30deg); }
+    94% { transform: skewX(2deg) translateX(-3px); }
+    95% { transform: skewX(0deg); filter: none; }
+  }
+
+  .subtitle {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(14px, 3vw, 22px);
+    color: var(--acorn-gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+  }
+
+  .ticker {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(28px, 6vw, 52px);
+    color: var(--portal-teal);
+    letter-spacing: 4px;
+    margin-top: 4px;
+    text-shadow: 0 0 20px var(--portal-teal);
+  }
+
+  .cipher-line {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 7px;
+    color: rgba(212,160,23,0.3);
+    margin-top: 10px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== SIGIL DIVIDER ===== */
+  .sigil-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 14px 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .sigil-line {
+    flex: 1; max-width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,160,23,0.28), transparent);
+  }
+  .sigil-glyph {
+    font-size: 20px;
+    color: rgba(212,160,23,0.45);
+    letter-spacing: 12px;
+    font-family: 'Cinzel', serif;
+    animation: glyph-pulse 6s ease-in-out infinite;
+  }
+  @keyframes glyph-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; text-shadow: 0 0 14px rgba(212,160,23,0.5); }
+  }
+
+  /* ===== SQUIRREL SECTION ===== */
+  .squirrel-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .triangle-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+  }
+  .triangle-wrap svg.tri {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 0.2;
+    animation: tri-breathe 8s ease-in-out infinite;
+  }
+  @keyframes tri-breathe {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.38; }
+  }
+
+  .squirrel-frame {
+    position: relative;
+    width: min(340px, 90vw);
+    aspect-ratio: 1;
+    border: 4px solid var(--bright-green);
+    border-radius: 8px;
+    background: linear-gradient(160deg, #0a150a 70%, #120820);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 2px #000,
+      0 0 30px rgba(92,203,63,0.4),
+      0 0 70px rgba(26,5,40,0.5),
+      inset 0 0 40px rgba(0,0,0,0.5);
+  }
+  .squirrel-frame::before {
+    content: '🐿️';
+    font-size: 120px;
+    animation: squirrel-crazy 0.8s steps(2) infinite;
+    filter: drop-shadow(0 0 20px rgba(200,255,0,0.6));
+    z-index: 2;
+  }
+
+  .acorn {
+    position: absolute;
+    font-size: 28px;
+    animation: acorn-fly 2.5s ease-in infinite;
+    pointer-events: none;
+  }
+  .acorn:nth-child(1) { animation-delay: 0s;   top: 20%; left: 10%; }
+  .acorn:nth-child(2) { animation-delay: 0.3s; top: 60%; left:  5%; }
+  .acorn:nth-child(3) { animation-delay: 0.6s; top: 30%; right: 8%; }
+  .acorn:nth-child(4) { animation-delay: 0.9s; top: 70%; right:10%; }
+  .acorn:nth-child(5) { animation-delay: 1.2s; top: 10%; left: 40%; }
+  .acorn:nth-child(6) { animation-delay: 1.5s; bottom:10%;left: 30%; }
+
+  @keyframes acorn-fly {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    60% { opacity: 1; }
+    100% { transform: scale(1.5) rotate(720deg) translate(20px, -20px); opacity: 0; }
+  }
+  @keyframes squirrel-crazy {
+    0% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.05) translateY(-5px); }
+  }
+  .squirrel-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(26,5,40,0.3));
+  }
+
+  .corner-bracket {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--acid-green);
+    border-style: solid;
+  }
+  .corner-bracket.tl { top:-2px;  left:-2px;  border-width: 3px 0 0 3px; }
+  .corner-bracket.tr { top:-2px;  right:-2px; border-width: 3px 3px 0 0; }
+  .corner-bracket.bl { bottom:-2px;left:-2px; border-width: 0 0 3px 3px; }
+  .corner-bracket.br { bottom:-2px;right:-2px;border-width: 0 3px 3px 0; }
+
+  .frame-rune {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: rgba(212,160,23,0.3);
+    letter-spacing: 8px;
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  /* ===== CONSPIRACY SECTION ===== */
+  .conspiracy {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-label {
+    font-family: 'Bangers', cursive;
+    font-size: 36px;
+    color: var(--crazy-red);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-shadow: 2px 2px 0 #000;
+  }
+  .section-label::before { content: '▶ '; color: var(--bright-green); }
+
+  .section-label.arcane {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: rgba(212,160,23,0.45);
+    letter-spacing: 6px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-shadow: none;
+  }
+  .section-label.arcane::before { content: ''; }
+
+  .lore-box {
+    background: linear-gradient(160deg, rgba(10,30,10,0.92), rgba(26,5,40,0.55));
+    border: 2px solid var(--green);
+    border-left: 6px solid var(--bright-green);
+    padding: 22px 26px;
+    font-size: 15px;
+    line-height: 1.9;
+    position: relative;
+    color: #c8e8c0;
+  }
+  /* Eye of providence watermark */
+  .lore-box::before {
+    content: '◬';
+    position: absolute;
+    bottom: 8px; right: 16px;
+    font-size: 90px;
+    color: rgba(212,160,23,0.035);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .lore-box strong { color: var(--acid-green); font-family: 'Permanent Marker', cursive; }
+  .lore-box .wild { color: var(--acorn-gold); font-weight: 700; }
+  .lore-box .whisper {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(212,160,23,0.38);
+    margin-top: 16px;
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* ===== HIDDEN VERSE ===== */
+  .hidden-verse {
+    max-width: 800px;
+    margin: 0 auto 10px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .verse-inner {
+    border-left: 2px solid rgba(212,160,23,0.2);
+    padding: 12px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    line-height: 2;
+    color: rgba(212,160,23,0.32);
+    letter-spacing: 2px;
+    font-style: italic;
+  }
+
+  /* ===== TOKENOMICS ===== */
+  .tokenomics {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .stat-card {
+    background: linear-gradient(160deg, #050f05, #0c061a);
+    border: 2px solid var(--acorn-brown);
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-4px) rotate(-1deg); border-color: var(--bright-green); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bright-green), var(--acorn-gold), var(--sigil-amber));
+  }
+  .stat-card::after {
+    content: '⬡';
+    position: absolute;
+    bottom: 4px; right: 8px;
+    font-size: 30px;
+    color: rgba(212,160,23,0.055);
+    pointer-events: none;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #8a9;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: 'Cinzel', serif;
+  }
+  .stat-value {
+    font-family: 'Bangers', cursive;
+    font-size: 32px;
+    color: var(--bright-green);
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(158,251,46,0.5);
+  }
+  .stat-sub { font-size: 11px; color: #567; margin-top: 4px; }
+
+  /* ===== TAPE ===== */
+  .tape-wrapper {
+    overflow: hidden;
+    background: var(--bright-green);
+    padding: 12px 0;
+    margin: 40px 0;
+    transform: rotate(-1deg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 2;
+  }
+  .tape-inner {
+    display: flex;
+    gap: 60px;
+    animation: scroll-tape 20s linear infinite;
+    white-space: nowrap;
+  }
+  .tape-item {
+    font-family: 'Bangers', cursive;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: #000;
+  }
+  @keyframes scroll-tape {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ===== BUTTONS ===== */
+  .cta-zone {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    font-family: 'Bangers', cursive;
+    font-size: 26px;
+    letter-spacing: 3px;
+    text-decoration: none;
+    border: 3px solid currentColor;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s;
+    cursor: pointer;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-102%);
+    transition: transform 0.2s ease;
+  }
+  .btn:hover::before { transform: translateX(0); }
+  .btn:hover { transform: scale(1.04) rotate(-1deg); }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-buy {
+    color: var(--acorn-gold);
+    background: #100800;
+    box-shadow: 4px 4px 0 var(--acorn-brown), 0 0 20px rgba(212,160,23,0.3);
+  }
+  .btn-buy::before { background: var(--acorn-gold); }
+  .btn-buy:hover { color: #000; }
+
+  .btn-twitter {
+    color: var(--drool-blue);
+    background: #000a14;
+    box-shadow: 4px 4px 0 #1a4060, 0 0 20px rgba(79,195,247,0.2);
+  }
+  .btn-twitter::before { background: var(--drool-blue); }
+  .btn-twitter:hover { color: #000; }
+  .btn-icon { font-size: 22px; }
+
+  /* ===== WARNING ===== */
+  .warning-box {
+    max-width: 800px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .warning-inner {
+    border: 2px dashed var(--crazy-red);
+    padding: 16px 20px;
+    font-size: 12px;
+    color: #a08070;
+    line-height: 1.7;
+    text-align: center;
+  }
+  .warning-inner strong { color: var(--crazy-red); font-family: 'Permanent Marker', cursive; }
+
+  /* ===== FLOATING EYES ===== */
+  .float-eye {
+    position: fixed;
+    width: 18px; height: 22px;
+    background: white;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 2px solid #333;
+    opacity: 0;
+    animation: appear-eye 12s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .float-eye::before {
+    content: '';
+    position: absolute;
+    width: 10px; height: 12px;
+    background: #111;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .float-eye:nth-child(1) { top: 15%; right: 8%;  animation-delay: 0s; }
+  .float-eye:nth-child(2) { top: 15%; right: 12%; animation-delay: 0.2s; }
+  .float-eye:nth-child(3) { top: 55%; left: 4%;   animation-delay: 6s; }
+  .float-eye:nth-child(4) { top: 55%; left: 8%;   animation-delay: 6.2s; }
+  .float-eye:nth-child(5) { bottom:20%;right: 6%; animation-delay: 3s; }
+  .float-eye:nth-child(6) { bottom:20%;right:10%; animation-delay: 3.2s; }
+  @keyframes appear-eye {
+    0%, 15%, 100% { opacity: 0; }
+    20%, 60% { opacity: 0.6; }
+    65%, 100% { opacity: 0; }
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #334;
+    border-top: 1px solid rgba(212,160,23,0.1);
+    position: relative;
+    z-index: 2;
+  }
+  footer .creator { color: var(--green); font-family: 'Permanent Marker', cursive; }
+  footer .rune-foot {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 8px;
+    color: rgba(212,160,23,0.2);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .btn { font-size: 20px; padding: 14px 24px; }
+    .sacred-ring { width: 280px; height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sacred geometry background — very faint -->
+<div class="sacred-bg">
+  <svg viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#D4A017" stroke-width="0.7">
+    <circle cx="450" cy="450" r="120"/>
+    <circle cx="450" cy="330" r="120"/>
+    <circle cx="450" cy="570" r="120"/>
+    <circle cx="554" cy="390" r="120"/>
+    <circle cx="346" cy="390" r="120"/>
+    <circle cx="554" cy="510" r="120"/>
+    <circle cx="346" cy="510" r="120"/>
+    <circle cx="450" cy="450" r="240"/>
+    <circle cx="450" cy="450" r="260" stroke-dasharray="4 12"/>
+    <polygon points="450,230 554,410 346,410"/>
+    <polygon points="450,670 554,490 346,490"/>
+    <polygon points="450,170 710,620 190,620" stroke-width="0.4"/>
+  </svg>
+</div>
+
+<!-- Floating ambient eyes -->
+<div class="float-eye"></div>
+<div class="float-eye"></div>
+<div class="float-eye"></div>
+<div class="float-eye"></div>
+<div class="float-eye"></div>
+<div class="float-eye"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="bg-portal"></div>
+  <div class="sacred-ring"></div>
+
+  <div class="above-eyes">ᛟ · Ordo Sciuri · ᛟ</div>
+
+  <div class="eyes-banner">
+    <div class="eye left"><div class="eye-drool"></div></div>
+    <div class="eye right"><div class="eye-drool"></div></div>
+  </div>
+
+  <div class="title-block">
+    <h1>ACORNS</h1>
+    <div class="subtitle">They Were Always In Control</div>
+    <div class="ticker">$ACORNS · SOL</div>
+    <div class="cipher-line">◈ · the seed contains the tree · ◈</div>
+  </div>
+</header>
+
+<!-- SIGIL DIVIDER -->
+<div class="sigil-divider">
+  <div class="sigil-line"></div>
+  <span class="sigil-glyph">◬ ᛟ ◬</span>
+  <div class="sigil-line"></div>
+</div>
+
+<!-- SCROLLING TAPE -->
+<div class="tape-wrapper">
+  <div class="tape-inner">
+    <span class="tape-item">🐿️ THE SQUIRRELS KNOW</span>
+    <span class="tape-item">🌰 BUY $ACORNS</span>
+    <span class="tape-item">👁️ THE ORDER WATCHES</span>
+    <span class="tape-item">🌀 PUMP.FUN</span>
+    <span class="tape-item">◬ AS ABOVE SO BELOW</span>
+    <span class="tape-item">🐿️ THE SQUIRRELS KNOW</span>
+    <span class="tape-item">🌰 BUY $ACORNS</span>
+    <span class="tape-item">👁️ THE ORDER WATCHES</span>
+    <span class="tape-item">🌀 PUMP.FUN</span>
+    <span class="tape-item">◬ AS ABOVE SO BELOW</span>
+    <span class="tape-item">🐿️ THE SQUIRRELS KNOW</span>
+    <span class="tape-item">🌰 BUY $ACORNS</span>
+  </div>
+</div>
+
+<!-- SQUIRREL ART ZONE -->
+<div class="squirrel-zone">
+  <div class="triangle-wrap">
+    <!-- Triangle of Providence -->
+    <svg class="tri" viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <polygon points="220,18 418,390 22,390" stroke="#D4A017" stroke-width="1.5"/>
+      <circle cx="220" cy="220" r="28" stroke="#9efb2e" stroke-width="1" stroke-dasharray="3 6"/>
+      <text x="220" y="225" text-anchor="middle" font-size="16" fill="rgba(212,160,23,0.55)" font-family="serif">◉</text>
+    </svg>
+    <div class="squirrel-frame">
+      <div class="corner-bracket tl"></div>
+      <div class="corner-bracket tr"></div>
+      <div class="corner-bracket bl"></div>
+      <div class="corner-bracket br"></div>
+      <span class="acorn">🌰</span>
+      <span class="acorn">🌰</span>
+      <span class="acorn">🌰</span>
+      <span class="acorn">🌰</span>
+      <span class="acorn">🌰</span>
+      <span class="acorn">🌰</span>
+    </div>
+  </div>
+  <div class="frame-rune">ᚷ · initiate · ᚹ · observe · ᛉ · ascend · ᚷ</div>
+</div>
+
+<!-- SIGIL DIVIDER -->
+<div class="sigil-divider">
+  <div class="sigil-line"></div>
+  <span class="sigil-glyph">ᚹ · ᛉ · ᚹ</span>
+  <div class="sigil-line"></div>
+</div>
+
+<!-- LORE -->
+<div class="conspiracy">
+  <div class="section-label arcane">The Revelation · First Degree</div>
+  <div class="section-label">THE TRUTH THEY HID</div>
+  <div class="lore-box">
+    <p>
+      You thought it was just a throwaway gag. A <strong>30-second bit</strong>. Squirrels in a tree.<br><br>
+      <span class="wild">You were wrong.</span><br><br>
+      While the galaxy-brained scientists were out here discovering <strong>dark matter</strong> and building portals to dimension C-137, the squirrels were already three moves ahead. They've been hoarding more than acorns. They've been hoarding <strong>leverage</strong>. And beneath the leverage — something older. Something that does not have a name in any language you were taught.<br><br>
+      Stock market? <span class="wild">Squirrels.</span> Election cycles? <span class="wild">Squirrels.</span> The 2008 financial crash? A controlled experiment — they needed to see how you'd react. Every buried cache is a <strong>node in the network</strong>. Every tree a receiver. The pattern has been running since before written memory.<br><br>
+      <strong>$ACORNS</strong> isn't just a meme coin. It's tribute. It's an acknowledgment. You buy in, maybe they let you keep your nuts. Or maybe — just maybe — you've already been selected.
+    </p>
+    <span class="whisper">ᛟ · the acorn is merely the door · ᛟ</span>
+  </div>
+</div>
+
+<!-- HIDDEN VERSE -->
+<div class="hidden-verse">
+  <div class="verse-inner">
+    "Before the first market opened, they had already counted.<br>
+    Before the first border was drawn, they had already crossed it.<br>
+    The nut remembers the oak. The oak forgets nothing."
+  </div>
+</div>
+
+<!-- TOKENOMICS -->
+<div class="tokenomics">
+  <div class="section-label arcane">Codex · Chain · Signal</div>
+  <div class="section-label">TOKENOMICS</div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Network</div>
+      <div class="stat-value">SOL</div>
+      <div class="stat-sub">Solana</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Platform</div>
+      <div class="stat-value">PUMP</div>
+      <div class="stat-sub">pump.fun</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Tax</div>
+      <div class="stat-value">0%</div>
+      <div class="stat-sub">Buy / Sell</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Ticker</div>
+      <div class="stat-value">$ACORNS</div>
+      <div class="stat-sub">SPL Token</div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGIL DIVIDER -->
+<div class="sigil-divider">
+  <div class="sigil-line"></div>
+  <span class="sigil-glyph">◬ · ◈ · ◬</span>
+  <div class="sigil-line"></div>
+</div>
+
+<!-- CTA BUTTONS -->
+<div class="cta-zone">
+  <a href="https://pump.fun/coin/AmkUSzqsRdAYYHJgwg1cX3qkN683w5Qvy5jCuGpipump" target="_blank" class="btn btn-buy">
+    <span class="btn-icon">🌰</span> BUY $ACORNS
+  </a>
+  <a href="https://x.com/VortexHowl" target="_blank" class="btn btn-twitter">
+    <span class="btn-icon">𝕏</span> @VortexHowl
+  </a>
+</div>
+
+<!-- WARNING -->
+<div class="warning-box">
+  <div class="warning-inner">
+    <strong>⚠ NOT FINANCIAL ADVICE ⚠</strong><br>
+    $ACORNS is a meme token created for entertainment purposes. Buying crypto is risky and you can lose everything. The squirrels accept no liability. They never do. They were always in control. Something larger than the squirrels was always in control of the squirrels.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>$ACORNS · Solana SPL Token · created by <span class="creator">@VortexHowl</span></p>
+  <span class="rune-foot">ᛟ · ordo sciuri · in acornis veritas · ᛟ</span>
+</footer>
+
+</body>
+</html>
